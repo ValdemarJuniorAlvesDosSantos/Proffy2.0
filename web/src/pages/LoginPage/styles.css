@@ -1,0 +1,209 @@
+
+#page-login{
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    
+
+}
+
+
+
+
+main{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+
+
+
+.insideButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 5.6rem;
+    background-color: var(--color-input-background);
+    margin-top: 0;
+    
+    border: 1px solid var(--color-line-in-white);
+    border-radius: 0 0 0.8rem 0;
+    border-left: 0;
+
+    width: 4.3rem;
+}
+.insideButton:focus{
+    outline: none;
+    box-shadow: none;
+}
+.input-block{
+    margin-bottom: 0;
+    padding-bottom: 0;
+
+}
+.input-block label{
+    font: normal 1.2rem Poppins;
+    line-height: 20px;
+    color: var(--color-text-complement);
+    position: relative;
+}
+.inputContainer .input-block input{
+    border-radius: 0.8rem 0.8rem 0 0; 
+    color: var(--color-text-complement); 
+}
+.inputContainer .input-block input::placeholder{
+    color: var(--color-text-complement);
+}
+.mainContent{
+    width: 35.2rem;
+}
+.mainContent h2{
+    color: var(--color-text-title);
+    font: 600 3.6rem Poppins;
+    margin-bottom: 4rem;
+}
+.passwordContainer .input-block {
+    flex:1;
+}
+.passwordContainer .input-block input{
+    padding-top: 0;
+    margin-top: 0;
+    border-radius: 0 0 0 0.8rem;
+    border-right: 0;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+}
+.passwordContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+    width: 100%;
+    
+}
+.passwordButtonIcon{
+    width: 30;
+    height: 30;
+    width: 100%;
+
+}
+
+.cbLembrar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cbLembrar input{
+    display: none;
+}
+
+.checkBoxLembrar + label::before{
+    content: '';
+    display: inline-block;
+    width: 2.4rem;
+    height: 2.4rem;
+    background: #fafafc ;
+    border-radius: 0.8rem;    
+    border-color: var(--color-line-in-white);
+    margin-right: 0.8rem;
+    border: 1px solid var(--color-line-in-white);
+    transition: 0.2s;
+
+}
+
+.checkBoxLembrar:checked + label::before{
+    content: url('../../assets/images/check.svg');
+    color: white;
+    background: var(--color-secundary);
+}
+.cbLembrar label{
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    color: var(--color-text-complement);
+    text-align: center;
+}
+.options{
+    
+    margin-top: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.esqueciSenha{
+    margin-left: 1rem;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    color: var(--color-text-complement);
+    text-decoration: none;
+}
+
+.buttonEntrar{
+    width: 100%;
+    height: 5.6rem;
+    background-color:  #dcdce5;
+    color: var(--color-text-complement);
+    border: 0;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font: 700 1.6rem Archivo;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    margin-top: 3.2rem;
+}
+.insideButtonFiled {
+    color: var(--color-button-text);
+    background: var(--color-secundary);
+}
+.insideButtonFiled:hover{
+    background: var(--color-secundary-dark);
+} 
+footer{
+    margin-top: 15rem;
+    margin-bottom: 5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+footer .left a{
+    font-style: normal;
+    font-weight: 600;
+    color:var(--color-primary-dark);
+    line-height: 2.6rem;
+    
+}
+footer .left p{
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    color: var(--color-text-base);
+}
+footer .right{
+    display:  flex;
+    align-items: center;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    color: var(--color-text-complement);
+    
+    
+}
+footer .right img{
+    margin-left: 0.4rem;
+}

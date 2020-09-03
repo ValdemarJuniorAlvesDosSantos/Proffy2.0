@@ -1,0 +1,51 @@
+.inputFloatLabel-block{
+
+    position: relative;
+
+}
+.inputFloatLabel-block + .input-block{
+    margin-top: 1.4rem;
+}
+.inputFloatLabel-block label{
+    position: absolute;
+    left: 2.4rem;
+    margin-top: 2.6rem;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: var(--color-text-complement);
+
+}
+.inputFloatLabel-block input:focus + label,
+.inputFloatLabel-block input:not(:placeholder-shown) + label{
+    margin-top: 1.4rem;
+    font-size: 1.2rem;
+}
+
+.inputFloatLabel-block input{
+    width: 100%;
+    height: 7.2rem;
+    margin-top: 0.8rem;
+    border-radius: 0.8rem;
+    background: var(--color-input-background);
+    border: 1px solid var(--color-line-in-white);
+    outline: 0;
+    padding: 3.4rem 2.4rem 1.4rem 2.4rem;
+    padding-top: 3.4rem;
+    font: 1.6rem Archivo;
+    color: var(--color-text-base);
+    
+}
+
+.inputFloatLabel-block:focus-within::after{
+    width: 100%-3.2rem;
+    height: 2px;
+    content: "";
+    background: var(--color-primary-light);
+    position: absolute;
+    left:1.6rem;
+    right: 1.6rem;
+    bottom:0;
+
+
+
+}

@@ -1,0 +1,36 @@
+#logoContainer{
+    height: 100vh;
+    width: 50vw;
+    background-color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-in-primary);
+}
+#backGroundLogo{
+
+    width: 100%;
+    height: 100%; 
+
+    display: flex;
+    
+    
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url('../../assets/images/backgroundImg.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 90% 90%;
+}
+#backGroundLogo img{
+    width: 33.4rem;
+    height: 9.7rem;
+}
+
+#backGroundLogo h1{
+    max-width: 29.9rem;
+    text-align: initial;
+    font-size: 2.5rem;
+}
