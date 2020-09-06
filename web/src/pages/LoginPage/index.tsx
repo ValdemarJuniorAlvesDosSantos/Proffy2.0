@@ -1,5 +1,6 @@
-import React, { useState, useContext ,useCallback , FormEvent } from 'react'
+import React, { useState, useContext  , FormEvent } from 'react'
 
+import {useHistory} from 'react-router-dom'
 import  VisibilityIcon from '@material-ui/icons/Visibility'
 import  VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import LogoContainer from '../../components/LogoContainer'
@@ -8,12 +9,11 @@ import Input from '../../components/Input';
 import AuthContext from '../../contexts/auth';
 import './styles.css';
 import { Link } from 'react-router-dom';
-import { exit } from 'process'
-import { render } from '@testing-library/react'
 
 
 function LoginPage (){
-    const { signed, authorization } = useContext(AuthContext)
+    const history = useHistory();
+    const {authorization } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordIsVisible, setPasswordIsVisible] = useState(false)
@@ -22,14 +22,12 @@ function LoginPage (){
     
     async function handleAuthorization(e: FormEvent){
         e.preventDefault(); 
-        await authorization(email,password) 
-         
-            
+        await authorization(email,password);
+        if (window.location.pathname === "/login") {
+            history.goBack();
+        }  
     }
-    function teste(value:string){
-        setPassword(value)        
-        console.log(password)
-    }
+    
     function handleToggleVisible(){
           
         if (passwordIsVisible){  

@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState,FormEvent } from 'react';
 import  VisibilityIcon from '@material-ui/icons/Visibility';
 import  VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import LogoContainer from '../../components/LogoContainer';
 import InputFloatLabel from '../../components/InputFloatLabel';
-
+import api from '../../services/api';
 import './styles.css'
 import { Link } from 'react-router-dom';
 import backIcon from '../../assets/images/icons/back.svg'
 
 function UserRegister(){
-    const [nome, setNome] = useState('')
-    const [sobrenome, setSobrenome] = useState('')
+    const [name, setName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -18,6 +18,28 @@ function UserRegister(){
     const [isFiled, setIsFiled] = useState(false)
     const [typeSenha, setTypeSenha] = useState("password")
 
+    async function handleCreateUser( e:FormEvent){
+        e.preventDefault();
+        
+        api.post("register",{
+            name,
+            lastName,
+            email,
+            password
+
+        }).then((resposta)=>{
+            const status = resposta.status
+            if (status === 201){
+                alert("criado com sucesso")
+            }else{
+                alert(resposta.data)
+            }
+        }).catch((error)=>{
+            alert(error)
+        })
+        
+
+    }
     function handleToggleVisible(){
           
         if (passwordIsVisible){  
@@ -48,30 +70,30 @@ function UserRegister(){
                             <img src={backIcon} alt="Voltar"/>
                         </Link>
                     </header>
-                    
+                    <form onSubmit={handleCreateUser}>
                     <h1>Cadastro </h1>
                     <p>Preencha os dados abaixo pra começar.</p>
                     <div className="inputsContainer">
                         <InputFloatLabel label="Nome" name="name" className="inputName" type='textarea'
-                            value={nome} 
+                            value={name} 
                             onChange={ (e) =>{ 
-                                setNome(e.target.value);
-                                handleSetIsFiled([e.target.value,sobrenome,email,password])           
+                                setName(e.target.value);
+                                handleSetIsFiled([e.target.value,lastName,email,password])           
                             }}
                         
                         />
                         <InputFloatLabel label="Sobrenome" name="last_name"
-                            value={sobrenome} 
+                            value={lastName} 
                             onChange={ (e) =>{ 
-                                setSobrenome(e.target.value);
-                                handleSetIsFiled([e.target.value, nome,email,password]);           
+                                setLastName(e.target.value);
+                                handleSetIsFiled([e.target.value, name,email,password]);           
                             }}
                         />
                         <InputFloatLabel label="Email" name="email"  
                             value={email} 
                             onChange={ (e) =>{ 
                                 setEmail(e.target.value);
-                                handleSetIsFiled([e.target.value, nome,sobrenome,password])           
+                                handleSetIsFiled([e.target.value, name,lastName,password])           
                             }}
                         
                         />
@@ -80,7 +102,7 @@ function UserRegister(){
                                    value={password} 
                                    onChange={ (e) =>{ 
                                        setPassword(e.target.value);
-                                       handleSetIsFiled([e.target.value, nome,sobrenome,email])            
+                                       handleSetIsFiled([e.target.value, name,lastName,email])            
                                     }}
                             
                             />                       
@@ -95,7 +117,7 @@ function UserRegister(){
                         </div> 
 
                     </div>
-                    <button type="button" className=
+                    <button type="submit" className=
                         {   isFiled
                             ? "buttonEntrar insideButtonFiled"
                             : " buttonEntrar "
@@ -103,7 +125,9 @@ function UserRegister(){
                     >
                             Concluir cadastro
                     </button>
+                    </form>
                 </div>
+                
             </main>
             <LogoContainer/>
         </div>
