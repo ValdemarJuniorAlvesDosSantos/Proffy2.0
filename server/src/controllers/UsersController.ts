@@ -1,7 +1,9 @@
-import {Request , Response} from 'express';
+import {Request , Response, NextFunction} from 'express';
 import db from '../database/conection';
 import bcrypt, { hash } from "bcryptjs";
-import  jwt from "jsonwebtoken";
+import  jwt from "jsonwebtoken"; 
+
+const { promisify } = require("util");
 
 export default class UsersController{
     async create (request: Request,response: Response){
@@ -38,26 +40,59 @@ export default class UsersController{
 
     }
     async auth (request: Request,response: Response){
-        const {
+        console.log(request.headers.authorization)
+        if (request.headers.authorization){
+
+            // console.log("Recebendo nova requisição" + request.headers.authorization + "\n\n\n\n\n\n")
+            const [scheme, token] = request.headers.authorization.split(" ");
+            try{
+                const decoded = await promisify(jwt.verify)(token, "secret");
+                
+                const user_id = decoded.id;
+
+                const foundUser = await db('usuarios')
+                            .where('usuarios.id','=',Number(user_id))
+                            .select()
+                            .then(result=>result[0])
+
+                return response.json({user:{ 
+                    id:foundUser.id,
+                    email:foundUser.email,
+                    name:foundUser.name,
+                    lastName:foundUser.lastName
+                 }});
+            }catch(error){
+                return response.json(null);
+            }
+
+        }
+
+        let {
             email,
             password
         } = request.body;
 
         console.log (email,password);
         try {
-            const user = await db('usuarios')
+            const foundUser = await db('usuarios')
                             .where('usuarios.email','=',String(email))
-                            .select()
                             .then(result=>result[0])
-
-            if (await bcrypt.compare(password , user.password)){
             
-                const token = jwt.sign({ id: user.id}, "secret", {
+            
+            if (await bcrypt.compare(password , foundUser.password)){
+            
+                const token = jwt.sign({ id: foundUser.id}, "secret", {
                     expiresIn: 86400
                 });
-                response.json({user , token})
+                
+                return response.json({user:{ 
+                        id:foundUser.id,
+                        email:foundUser.email,
+                        name:foundUser.name,
+                        lastName:foundUser.lastName
+                     }, token})
             }else{
-                response.send(400).json({error:"falha ao autenticar"})
+                return response.send(400).json({error:"falha ao autenticar"})
             }
         } catch (error) {
             response.json(null)
@@ -69,6 +104,25 @@ export default class UsersController{
 
     }
 
+    async authWithToken (request: Request,response: Response, next:NextFunction){
+        const authHeader = request.headers.authorization;
+      
+        if (!authHeader) {
+          return response.status(401).send({ error: "No token provided" });
+        }
+      
+        const [scheme, token] = authHeader.split(" ");
+      
+        try {
+          const decoded = await promisify(jwt.verify)(token, "secret");
+      
+          request.body.userId = decoded.id;
+      
+          return next();
+        } catch (err) {
+          return response.status(401).send({ error: "Token invalid" });
+        }
+      };
 
 
 }
