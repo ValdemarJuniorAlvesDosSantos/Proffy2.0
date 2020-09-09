@@ -14,6 +14,8 @@ import { Link } from 'react-router-dom';
 function LoginPage (){
     const history = useHistory();
     const {authorization} = useContext(AuthContext)
+    
+    const [save, setSave] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordIsVisible, setPasswordIsVisible] = useState(false)
@@ -24,7 +26,7 @@ function LoginPage (){
     
     async function handleAuthorization(e: FormEvent){
         e.preventDefault(); 
-        await authorization(email,password);
+        await authorization(email,password,false,save);
         if (window.location.pathname === "/login") {
             history.goBack();
         }  
@@ -88,7 +90,9 @@ function LoginPage (){
                     </div>
                     <div className="options">
                         <div className="cbLembrar">
-                            <input type="checkbox" className="checkBoxLembrar" id="checkBoxLembrar"/>
+                            <input type="checkbox" className="checkBoxLembrar" id="checkBoxLembrar"
+                                onChange={ () => setSave(!save) }
+                            />
 
                             <label htmlFor="checkBoxLembrar">Lembrar-me</label>   
                         </div>

@@ -1,7 +1,8 @@
 import {Request , Response, NextFunction} from 'express';
-import db from '../database/conection';
+import db from '../database/connection';
 import bcrypt, { hash } from "bcryptjs";
 import  jwt from "jsonwebtoken"; 
+
 
 const { promisify } = require("util");
 
@@ -19,7 +20,7 @@ export default class UsersController{
         try{
             const hashPassword  = await bcrypt.hash(password, 8);
             
-            const user = await  trx('usuarios').insert({
+            const user = await  trx('users_auth').insert({
                 name,
                 lastName,
                 email,
@@ -48,8 +49,8 @@ export default class UsersController{
                 
                 const user_id = decoded.id;
 
-                const foundUser = await db('usuarios')
-                            .where('usuarios.id','=',Number(user_id))
+                const foundUser = await db('users_auth')
+                            .where('users_auth.id','=',Number(user_id))
                             .select()
                             .then(result=>result[0])
 
@@ -70,10 +71,9 @@ export default class UsersController{
             password
         } = request.body;
 
-        console.log (email,password);
         try {
-            const foundUser = await db('usuarios')
-                            .where('usuarios.email','=',String(email))
+            const foundUser = await db('users_auth')
+                            .where('users_auth.email','=',String(email))
                             .then(result=>result[0])
             
             
@@ -102,25 +102,7 @@ export default class UsersController{
 
     }
 
-    async authWithToken (request: Request,response: Response, next:NextFunction){
-        const authHeader = request.headers.authorization;
-      
-        if (!authHeader) {
-          return response.status(401).send({ error: "No token provided" });
-        }
-      
-        const [scheme, token] = authHeader.split(" ");
-      
-        try {
-          const decoded = await promisify(jwt.verify)(token, "secret");
-      
-          request.body.userId = decoded.id;
-      
-          return next();
-        } catch (err) {
-          return response.status(401).send({ error: "Token invalid" });
-        }
-      };
+    
 
 
 }

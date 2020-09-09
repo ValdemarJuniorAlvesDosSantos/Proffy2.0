@@ -1,6 +1,8 @@
 /web/node_modules
+
 /web/yarn**
 /server/node_modules
+/server/.vscode
 
 /mobile/node_modules
 /mobile/.expo**

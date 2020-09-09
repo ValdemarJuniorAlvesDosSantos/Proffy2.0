@@ -1,17 +1,19 @@
-import React, { useState , useEffect}  from 'react';
-import {Link}  from 'react-router-dom'
-
-
-import logoImg from '../../assets/images/logo.svg'
-import landingImg from '../../assets/images/landing.svg'
-import studyIcon from '../../assets/images/icons/study.svg'
-import giveClassIcon from '../../assets/images/icons/give-classes.svg'
-import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg'
-import './styles.css';
+import React, { useState , useEffect,useContext}  from 'react';
+import {Link}  from 'react-router-dom';
+import logoImg from '../../assets/images/logo.svg';
+import landingImg from '../../assets/images/landing.svg';
+import studyIcon from '../../assets/images/icons/study.svg';
+import giveClassIcon from '../../assets/images/icons/give-classes.svg';
+import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
+import  PowerSettingsNew from '@material-ui/icons/PowerSettingsNew'
 import api from '../../services/api';
+import AuthContext from '../../contexts/auth';
+
+import './styles.css';
 function Landing(){
     
     const [totalConnections, setTotalConnections ] = useState(0);   
+    const {logout} = useContext(AuthContext)
     
 
     useEffect( ()=>{
@@ -25,12 +27,24 @@ function Landing(){
 
     },[])
 
-    
+    function handleLogout(){
+        
+        logout()
+    }
 
     return (
 
         <div id="page-landing">
+
+            <button className="buttonLogout" type="button" onClick={handleLogout}>
+                
+                 <PowerSettingsNew fontSize="inherit"> </PowerSettingsNew>
+                 
+        </button>
+
             <div id="page-landing-content" className="container">
+                
+
                 <div className="logo-container">
                     <img src={logoImg} alt=""/>
                     <h2>Sua plataforma de estudos online.</h2>

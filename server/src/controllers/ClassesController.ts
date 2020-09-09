@@ -1,5 +1,5 @@
 import {Request , Response} from 'express';
-import db from '../database/conection';
+import db from '../database/connection';
 import convetHoursToMinutes from '../utils/convertHoursToMinutes';
 
 interface ScheduleItem{

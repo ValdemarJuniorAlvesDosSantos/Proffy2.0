@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 
     color: var(--color-text-in-primary);
 
@@ -12,7 +13,26 @@
 
 
 }
+.buttonLogout{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-dark);
+    font-size: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border:0;
+    color: white;
+    border-radius: 0.8rem;
+    outline: none;
+}
 
+.buttonLogout:hover{
+    background-color: var(--color-secondary);
+}
+.buttonLogout:active{
+    color:var(--color-primary-dark);
+}
 .logo-container img{
     height: 10rem;
 }

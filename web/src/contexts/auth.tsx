@@ -4,7 +4,8 @@ import api from '../services/api';
 interface  AuthContextData{
     signed: boolean,
     user: User | null,
-    authorization(email?:string, password?:string,UseToken?:Boolean): Promise<void>
+    authorization(email?:string, password?:string,UseToken?:Boolean,save?:Boolean): Promise<void>,
+    logout:Function
 }
 
 interface User {
@@ -22,7 +23,14 @@ const AuthContext = createContext <AuthContextData> ({} as AuthContextData)
 
 export const AuthProvider: React.FC = ({children}) => {
     const [user,setUser] = useState<User|null>(null) 
-    async function authorization(email?:string,password?:string, UseToken?:Boolean){
+
+    function logout (){
+
+        localStorage.removeItem("@Proffy/token")
+        setUser(null);
+
+    }
+    async function authorization(email?:string,password?:string, UseToken?:Boolean,save?:Boolean){
         
         if (UseToken){
             const token = localStorage.getItem("@Proffy/token")
@@ -30,8 +38,12 @@ export const AuthProvider: React.FC = ({children}) => {
                 const response = await api.post("auth",{},{headers:{
                     'authorization': `Baerer ${token}`
                 }})
-                console.log(token)
-                setUser(response.data.user);
+                console.log(response.data)
+                if (response.data !== null){
+                    
+                 setUser(response.data.user);
+
+                }
                 
             }
             return ;
@@ -42,22 +54,25 @@ export const AuthProvider: React.FC = ({children}) => {
         })
 
         
-        setUser(response.data.user)
+        
 
         if (response.data === null){            
             alert("Erro no login")
+            setUser(null)
         }else{
-            localStorage.setItem("@Proffy/token",response.data.token)
+            setUser(response.data.user)
+            if (save){                
+                localStorage.setItem("@Proffy/token",response.data.token)
+            }
 
             alert("Sucesso no login")
-            console.log(localStorage.getItem("@Proffy/token"))
 
     
         }
     
     }
     return(
-        <AuthContext.Provider value= {{signed: !!user, user,authorization }}>
+        <AuthContext.Provider value= {{signed: !!user, user,authorization,logout }}>
             {children}
         </AuthContext.Provider>
     )
