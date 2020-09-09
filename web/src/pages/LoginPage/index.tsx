@@ -1,4 +1,4 @@
-import React, { useState, useContext  , FormEvent, useEffect } from 'react'
+import React, { useState, useContext  , FormEvent } from 'react'
 
 import {useHistory} from 'react-router-dom'
 import  VisibilityIcon from '@material-ui/icons/Visibility'
@@ -13,20 +13,14 @@ import { Link } from 'react-router-dom';
 
 function LoginPage (){
     const history = useHistory();
-    const {authorization } = useContext(AuthContext)
+    const {authorization} = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordIsVisible, setPasswordIsVisible] = useState(false)
     const [isFiled, setIsFiled] = useState(false)
     const [typeSenha, setTypeSenha] = useState("password")
 
-    authorization('','',true)
-    
-    useEffect( ()=>{
-        localStorage.removeItem("@Proffy/token")
-        
-
-    },[])
+   
     
     async function handleAuthorization(e: FormEvent){
         e.preventDefault(); 

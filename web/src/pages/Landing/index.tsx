@@ -1,6 +1,5 @@
-import React, { useState , useEffect,useContext}  from 'react';
+import React, { useState , useEffect}  from 'react';
 import {Link}  from 'react-router-dom'
-import AuthContext from '../../contexts/auth';
 
 
 import logoImg from '../../assets/images/logo.svg'
@@ -13,7 +12,7 @@ import api from '../../services/api';
 function Landing(){
     
     const [totalConnections, setTotalConnections ] = useState(0);   
-    const { authorization } = useContext(AuthContext);
+    
 
     useEffect( ()=>{
         api.get('connections').then(response => {
@@ -26,7 +25,7 @@ function Landing(){
 
     },[])
 
-    // authorization('' , '' ,true)
+    
 
     return (
 

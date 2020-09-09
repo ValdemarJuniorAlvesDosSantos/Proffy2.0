@@ -83,10 +83,10 @@
 }
 .insideButtonFiled {
     color: var(--color-button-text);
-    background: var(--color-secundary);
+    background: var(--color-secondary);
 }
 .insideButtonFiled:hover{
-    background: var(--color-secundary-dark);
+    background: var(--color-secondary-dark);
 }
 
 

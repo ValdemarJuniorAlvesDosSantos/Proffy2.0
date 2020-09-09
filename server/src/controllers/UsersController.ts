@@ -40,10 +40,8 @@ export default class UsersController{
 
     }
     async auth (request: Request,response: Response){
-        console.log(request.headers.authorization)
         if (request.headers.authorization){
 
-            // console.log("Recebendo nova requisição" + request.headers.authorization + "\n\n\n\n\n\n")
             const [scheme, token] = request.headers.authorization.split(" ");
             try{
                 const decoded = await promisify(jwt.verify)(token, "secret");

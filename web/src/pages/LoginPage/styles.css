@@ -126,7 +126,7 @@ main{
 .checkBoxLembrar:checked + label::before{
     content: url('../../assets/images/check.svg');
     color: white;
-    background: var(--color-secundary);
+    background: var(--color-secondary);
 }
 .cbLembrar label{
     display: flex;
@@ -170,10 +170,10 @@ main{
 }
 .insideButtonFiled {
     color: var(--color-button-text);
-    background: var(--color-secundary);
+    background: var(--color-secondary);
 }
 .insideButtonFiled:hover{
-    background: var(--color-secundary-dark);
+    background: var(--color-secondary-dark);
 } 
 footer{
     margin-top: 15rem;
