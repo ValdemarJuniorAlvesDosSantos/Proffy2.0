@@ -4,7 +4,8 @@ import SplashScreen from 'expo-splash-screen';
 import backgroundImg from '../../assets/images/background.png';
 import logoImg from '../../assets/images/logo.png'
 import api from '../../services/api';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
+import styles from './styles';
 function Splash(){
     const {navigate} = useNavigation();
     const [totalConnections, setTotalConnections ] = useState(-1)
@@ -26,7 +27,7 @@ function Splash(){
                     style={styles.logoImg} 
                     resizeMethod="resize"
                 />
-                <Text style={styles.title}>Sua plataforma de estudos onlines.</Text>
+                <Text style={styles.title}>Sua plataforma de estudos online.</Text>
             </View>
             
             
@@ -34,5 +35,3 @@ function Splash(){
     )
 }
 export default Splash;
-
-import styles from './styles';

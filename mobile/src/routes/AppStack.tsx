@@ -6,12 +6,14 @@ import GiveClasses from '../pages/GiveClasses';
 import StudyTabs from './StudyTabs';
 import Splash from '../pages/Splash';
 import OnboardingPage from '../pages/OnboardingPage';
+import Login from '../pages/Login';
 const {Navigator , Screen} = createStackNavigator();
 
 function AppStack (){
     return (        
         <NavigationContainer>
-            <Navigator screenOptions={{ headerShown:false}}> 
+            <Navigator screenOptions={{ headerShown:false}}>
+                <Screen name="Login" component={Login} />  
                 <Screen name="Onboarding" component={OnboardingPage} />                               
                 <Screen name="Splash" component={Splash}/>
                 <Screen name="Landing" component={Landing}/>

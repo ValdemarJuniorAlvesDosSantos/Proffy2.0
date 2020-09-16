@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
         marginTop:25,
 
     },
+    bottom:{
+        flex:1,
+        backgroundColor: "#E5E5E5"
+    },
     footer:{        
         marginTop:100,        
         marginLeft:40,
