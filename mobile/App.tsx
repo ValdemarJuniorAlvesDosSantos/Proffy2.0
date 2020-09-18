@@ -8,6 +8,7 @@ import {Poppins_400Regular, Poppins_600SemiBold} from '@expo-google-fonts/poppin
 import AppStack from './src/routes/AppStack';
 import Splash from './src/pages/Splash';
 import SplashScreen from 'expo-splash-screen';
+import { AuthProvider } from './src/contexts/auth';
 export default function App() {
   let [fontsLoad]= useFonts({
     Archivo_400Regular,
@@ -20,7 +21,9 @@ export default function App() {
   }else{
     return (
       < >
-        < AppStack />
+        <AuthProvider>
+          < AppStack />
+        </AuthProvider>
         <StatusBar style="light"/>
       </>
     );

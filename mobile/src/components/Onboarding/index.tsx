@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,Text, ImageBackground, Image } from 'react-native';
+import {View,Text, ImageBackground, Image } from 'react-native';
 import bgStudy from '../../assets/images/bgStudy.png';
 import bgTeacher from '../../assets/images/bgTeacher.png';
 import studyIcon from '../../assets/images/icons/study.png'
@@ -58,7 +58,7 @@ const Onboarding:React.FC<OnboardingProps> = ({title,number,onPressButton}) => {
                     
 
                 </View>
-                <InputBlock label="Password"></InputBlock>
+                
             </View>
         </View>
 

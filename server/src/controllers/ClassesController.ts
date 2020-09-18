@@ -1,6 +1,6 @@
 import {Request , Response} from 'express';
 import db from '../database/connection';
-import convetHoursToMinutes from '../utils/convertHoursToMinutes';
+import convertHoursToMinutes from '../utils/convertHoursToMinutes';
 
 interface ScheduleItem{
     week_day: number,
@@ -11,8 +11,8 @@ interface ScheduleItem{
 
 export default class ClassesController{
     async index (request: Request,response: Response){
+        
         const filters = request.query;
-
         const subject = filters.subject as string;
         const week_day= filters.week_day as string;
         const time = filters.time as string;
@@ -23,7 +23,7 @@ export default class ClassesController{
                 error:"Missing filters to search classes"
              })
         }
-        const timeInMinutes = convetHoursToMinutes(time)
+        const timeInMinutes = convertHoursToMinutes(time)
         
         const classes = await db('classes')
             .whereExists(function(){
@@ -53,13 +53,13 @@ export default class ClassesController{
 
         const trx = await db.transaction();
         try{
-            const insertUsersIds = await trx('users').insert({
-                name,
-                avatar,
-                whatsapp,
-                bio
-            });
-            const user_id = insertUsersIds[0];
+            // const insertUsersIds = await trx('users').insert({
+            //     name,
+            //     avatar,
+            //     whatsapp,
+            //     bio
+            // });
+            const user_id = 1; //insertUsersIds[0];
             const insertClassesIds = await trx('classes').insert({
                 subject,
                 cost,
@@ -71,8 +71,8 @@ export default class ClassesController{
                 return {
                     class_Id,
                     week_day: scheduleItem.week_day,
-                    from: convetHoursToMinutes(scheduleItem.from),
-                    to: convetHoursToMinutes(scheduleItem.to),
+                    from: convertHoursToMinutes(scheduleItem.from),
+                    to: convertHoursToMinutes(scheduleItem.to),
         
                 };
             })

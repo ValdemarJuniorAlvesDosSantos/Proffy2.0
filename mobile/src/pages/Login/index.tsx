@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext,useEffect } from 'react';
 import { View,Text, ImageBackground, Image, TextInput} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
@@ -12,6 +12,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import InputBlock from '../../components/InputBlock';
 
 import {Ionicons} from '@expo/vector-icons';
+import AuthContext from '../../contexts/auth';
 
 
 
@@ -21,16 +22,35 @@ function Login(){
     const [password,setPassword] = useState("")
     const [passwordVisible,setPasswordVisible] = useState(false)
     const [saveCheckBox, setSaveCheckBox] = useState(false)
-
+    const [filled, setSaveFilled] = useState(false)
+    
+    const {authorization,user} = useContext(AuthContext);
+    useEffect(
+        ()=>{
+            setSaveFilled(email!== "" && password !== "")
+        },
+        [email,password]
+    )
+    async function handleAuthorization(){
+        if (!filled){
+            alert("Preencha todos os dados.")
+            return
+        }
+        await authorization(email,password,false,false);
+          
+    }
+    
     function handleGoToLanding(){
         
         navigate("Landing")
     }
+    
     function handlePasswordVisible(){
         setPasswordVisible(!passwordVisible)
     }
 
     return (
+        
         <View style={styles.container}>
 
             <View style={styles.header} >
@@ -94,8 +114,7 @@ function Login(){
                             <CheckBox                 
                                 value={saveCheckBox}
                                 onValueChange={(value) => setSaveCheckBox(value)}
-                                tintColors={{true: "black" ,false:"black"}}
-                                tintColor={"blue"}
+                                
                             />
                             <Text style={styles.textOptions}>
                                 Lembrar-me
@@ -109,6 +128,11 @@ function Login(){
                         
                     </View> 
                     
+                    <BorderlessButton style={[styles.buttonEntrar,filled ?{backgroundColor:"#04D361"}: {}]} onPress={handleAuthorization}>
+                        <Text style={[styles.textButtonEntrar,filled ?{color:"white"}: {}]}>
+                           Entrar
+                        </Text>                   
+                    </BorderlessButton>
                    
 
                 </View>

@@ -20,7 +20,7 @@ export default class UsersController{
         try{
             const hashPassword  = await bcrypt.hash(password, 8);
             
-            const user = await  trx('users_auth').insert({
+            const user = await  trx('users').insert({
                 name,
                 lastName,
                 email,
@@ -49,8 +49,8 @@ export default class UsersController{
                 
                 const user_id = decoded.id;
 
-                const foundUser = await db('users_auth')
-                            .where('users_auth.id','=',Number(user_id))
+                const foundUser = await db('users')
+                            .where('users.id','=',Number(user_id))
                             .select()
                             .then(result=>result[0])
 
@@ -72,8 +72,8 @@ export default class UsersController{
         } = request.body;
 
         try {
-            const foundUser = await db('users_auth')
-                            .where('users_auth.email','=',String(email))
+            const foundUser = await db('users')
+                            .where('users.email','=',String(email))
                             .then(result=>result[0])
             
             

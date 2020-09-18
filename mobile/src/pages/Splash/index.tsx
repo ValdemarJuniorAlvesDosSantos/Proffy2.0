@@ -10,14 +10,12 @@ function Splash(){
     const {navigate} = useNavigation();
     const [totalConnections, setTotalConnections ] = useState(-1)
     
-    if (totalConnections !==-1){
-        navigate("Landing")
-    }else{
-        api.get('connections').then(response => {
-                const { total } = response.data;
-                setTotalConnections(total);
-        })
-    }
+    useEffect( ()=>{
+        setTimeout(() => {
+            navigate("Onboarding")
+        }, 2000);
+    },[] )
+
     return(
         <View style={styles.container}>
             <Image source={backgroundImg} style={styles.backgroundImg}/>

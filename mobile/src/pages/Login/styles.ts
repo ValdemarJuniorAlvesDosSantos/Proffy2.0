@@ -51,9 +51,12 @@ const styles = StyleSheet.create({
     },
     bottom:{
         flex:1,
-        backgroundColor: "#E5E5E5"
+        backgroundColor: "#E5E5E5",
+
     },
-    bottomContainer:{        
+    bottomContainer:{  
+        flex:1,
+        justifyContent:"space-between",      
         marginLeft:30,
         marginRight:30,
         marginBottom:65,
@@ -112,6 +115,16 @@ const styles = StyleSheet.create({
     checkBox:{
         backgroundColor:"white",
         color:"blue"
+    },
+    buttonEntrar:{
+        justifyContent:"center",
+        alignItems:"center",
+        backgroundColor:"#DCDCE5",
+        borderRadius:8,
+        height:40
+    },
+    textButtonEntrar:{        
+        color:"#9C98A6"
     },
 
 })
