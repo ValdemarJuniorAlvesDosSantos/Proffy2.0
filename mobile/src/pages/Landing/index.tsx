@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import {  useNavigation } from '@react-navigation/native'
 import {RectButton} from 'react-native-gesture-handler'
@@ -11,16 +11,21 @@ import studyIcon from '../../assets/images/icons/study.png'
 import giveClassesIcon from '../../assets/images/icons/give-classes.png'
 import heartIcon from '../../assets/images/icons/heart.png'
 import api from '../../services/api';
+import AuthContext from '../../contexts/auth';
 function Landing (){
     const {navigate} = useNavigation();
+    const [totalConnections, setTotalConnections ] = useState(0);
+    const {logout} = useContext(AuthContext);
     function handleNavigateToGiveClassesPage(){
         navigate('GiveClasses');
     }
     function handleNavigateToStudyPages(){
         navigate('Study');
     }
+    function handleLogout(){
+        logout();
+    }
 
-    const [totalConnections, setTotalConnections ] = useState(0)
     useEffect( ()=>{
         api.get('connections').then(response => {
             const { total } = response.data;
@@ -58,7 +63,17 @@ function Landing (){
             Total de {totalConnections} conexões já realizadas {' '}
 
                 <Image source={heartIcon}/>
+
             </Text>
+            
+            <RectButton
+                onPress={handleLogout}
+                
+            >
+                <Text style={styles.totalConnections}>sair</Text>
+
+            </RectButton>
+            
         </View>
 
     )

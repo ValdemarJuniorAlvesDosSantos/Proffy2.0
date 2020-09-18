@@ -1,5 +1,7 @@
 import React, {createContext,useState} from 'react'
 import api from '../services/api';
+import AsyncStorage from '@react-native-community/async-storage';
+import { NavigationHelpersContext } from '@react-navigation/native';
 
 interface  AuthContextData{
     signed: boolean,
@@ -27,27 +29,35 @@ export const AuthProvider: React.FC = ({children}) => {
     function logout (){
 
         // localStorage.removeItem("@Proffy/token")
+        AsyncStorage.removeItem('token')
         setUser(null);
 
     }
     async function authorization(email?:string,password?:string, UseToken?:Boolean,save?:Boolean){
         
-        // if (UseToken){
-        //     const token = localStorage.getItem("@Proffy/token")
-        //     if (token){
-        //         const response = await api.post("auth",{},{headers:{
-        //             'authorization': `Baerer ${token}`
-        //         }})
-        //         console.log(response.data)
-        //         if (response.data !== null){
-                    
-        //          setUser(response.data.user);
+        if (UseToken){
 
-        //         }
+            
+                await AsyncStorage.getItem('token').then( async (response) => {
+                    if (response){
+                        const respPost = await api.post("auth",{},{headers:{
+                            'authorization': `Baerer ${response}`
+                            }}
+                        )
+                        if (respPost.data !== null){
+                            
+                            setUser(respPost.data.user);
+    
+                        }
+                        
+                    }       
+                });
+               
                 
-        //     }
-        //     return ;
-        // }
+                
+            return ;
+        }
+
         const response = await api.post("auth",{
             email,
             password
@@ -62,9 +72,9 @@ export const AuthProvider: React.FC = ({children}) => {
             
         }else{
             setUser(response.data.user)
-            // if (save){                
-            //     localStorage.setItem("@Proffy/token",response.data.token)
-            // }
+            if (save){                
+                await AsyncStorage.setItem('token',response.data.token);
+            }
 
             alert("Sucesso no login")
 

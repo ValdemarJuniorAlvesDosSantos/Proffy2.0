@@ -36,7 +36,7 @@ function Login(){
             alert("Preencha todos os dados.")
             return
         }
-        await authorization(email,password,false,false);
+        await authorization(email,password,false,saveCheckBox);
           
     }
     

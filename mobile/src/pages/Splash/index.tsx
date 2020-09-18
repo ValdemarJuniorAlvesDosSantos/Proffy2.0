@@ -1,20 +1,22 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect, useContext} from 'react';
 import { View,Image,Text } from 'react-native';
 import SplashScreen from 'expo-splash-screen';
 import backgroundImg from '../../assets/images/background.png';
 import logoImg from '../../assets/images/logo.png'
-import api from '../../services/api';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
+import AuthContext from '../../contexts/auth';
 function Splash(){
     const {navigate} = useNavigation();
-    const [totalConnections, setTotalConnections ] = useState(-1)
+    const {authorization,signed} = useContext(AuthContext);
     
-    useEffect( ()=>{
+    useEffect(()=>{
+        authorization('','',true,false)
         setTimeout(() => {
             navigate("Onboarding")
         }, 2000);
-    },[] )
+        
+    },[])
 
     return(
         <View style={styles.container}>
