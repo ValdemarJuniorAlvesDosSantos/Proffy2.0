@@ -1,0 +1,41 @@
+.completed-page{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-primary);
+    background-image: url('../../assets/images/backgroundCompletedPage.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.title{
+    color: var(--color-title-in-primary);    
+    font: 1.6rem Archivo 700;
+    line-height: 4.2rem;
+    margin-top: 4rem;
+    margin-bottom: 2.4rem;
+}
+.subTitle{
+    color: var(--color-text-in-primary);
+    
+    font-family: Poppins;
+    text-align: center;
+
+}
+.button{
+    margin-top: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-secondary);
+    text-decoration: none;
+    
+    color: var(--color-title-in-primary);
+    width: 19rem;
+    height: 5.6rem;
+    border-radius: 0.8rem;
+}

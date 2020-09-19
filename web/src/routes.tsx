@@ -11,7 +11,7 @@ function Routes (){
     const { signed,authorization } = useContext(AuthContext)
 
     useEffect(()=>{        
-        authorization('','',true)        
+        authorization('','',true,false)        
     },[])
     
     return signed ? <AppRoutes/> : <AuthRoutes/>
