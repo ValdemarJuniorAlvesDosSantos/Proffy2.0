@@ -2,8 +2,9 @@ import {Request , Response, NextFunction} from 'express';
 import db from '../database/connection';
 import bcrypt, { hash } from "bcryptjs";
 import  jwt from "jsonwebtoken"; 
-
-
+import crypto from "crypto";
+import nodemailer from "nodemailer";
+import sendEmailReset from "../utils/email"
 const { promisify } = require("util");
 
 export default class UsersController{
@@ -51,8 +52,7 @@ export default class UsersController{
 
                 const foundUser = await db('users')
                             .where('users.id','=',Number(user_id))
-                            .select()
-                            .then(result=>result[0])
+                            .select().first();
 
                 return response.json({user:{ 
                     id:foundUser.id,
@@ -73,8 +73,8 @@ export default class UsersController{
 
         try {
             const foundUser = await db('users')
-                            .where('users.email','=',String(email))
-                            .then(result=>result[0])
+                            .where('users.email','=',String(email)).first()
+                           
             
             
             if (await bcrypt.compare(password , foundUser.password)){
@@ -90,10 +90,10 @@ export default class UsersController{
                         lastName:foundUser.lastName
                      }, token})
             }else{
-                return response.send(400).json({error:"falha ao autenticar"})
+                return response.sendStatus(400).json({error:"falha ao autenticar"})
             }
         } catch (error) {
-            response.json(null)
+            response.json(null);
         }
 
 
@@ -102,7 +102,61 @@ export default class UsersController{
 
     }
 
-    
+    async forgot_password (request: Request,response: Response){
+        const email = request.body.email;
+        
+        try{
+            
+            const foundUser = await db('users')
+                              .where('users.email','=',String(email)).first();
 
+            if (!foundUser){
+                return response.send({error: "User not found"});
+            }
+            const tokenReset = crypto.randomBytes(25).toString("hex");
+            const tokenResetExpire = new Date();
+            tokenResetExpire.setHours( tokenResetExpire.getHours() + 1);
+            await db('users')
+                  .where('users.id','=',Number(foundUser.id))
+                  .update({tokenReset,tokenResetExpire})
+            
+            sendEmailReset(foundUser.id, foundUser.email, tokenReset)
+            
+                          
+            response.json({user_id:foundUser.id,tokenReset})
+            
+        }catch(err){
+            response.send({error: "Error on recover password"});
+        }
+
+    }
+    async reset_password (request: Request,response: Response){
+        const {user_id,token,new_password} = request.body
+        try{
+            const foundUser = await db('users')
+                              .where('users.id','=',Number(user_id)).first();
+            if (!foundUser){
+                return response.json({error: "User not found"});
+            }
+            if (token !== foundUser.tokenReset ){
+                
+                return response.json({error: "Token is not valid"});                
+            }
+            const now = new Date();
+            if (foundUser.tokenResetExpire < now ){
+                return response.json({error: "Token expired"});
+            }
+            const hashPassword  = await bcrypt.hash(new_password, 8);
+            await db('users')
+                  .where('users.id','=',Number(foundUser.id))
+                  .update({password:hashPassword}) 
+
+            return response.json({msg:"modificado com sucesso"});
+
+        }catch(err){
+            return response.send(err)
+        }
+    }
+    
 
 }
