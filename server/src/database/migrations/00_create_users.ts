@@ -14,6 +14,9 @@ export async function up( knex: Knex){
         table.string('whatsapp').defaultTo("");
         table.string('bio').defaultTo("");
 
+        table.string('tokenReset');
+        table.dateTime('tokenResetExpire');
+
     });
 }
 

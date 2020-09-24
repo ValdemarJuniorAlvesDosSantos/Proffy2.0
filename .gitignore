@@ -3,6 +3,10 @@
 /web/yarn**
 /server/node_modules
 /server/.vscode
+/server/yarn**
+
 
 /mobile/node_modules
 /mobile/.expo**
+
+**.env

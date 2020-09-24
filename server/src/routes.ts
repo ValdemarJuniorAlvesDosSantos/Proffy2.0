@@ -18,6 +18,8 @@ routes.get('/connections',connectionsController.index);
 
 routes.post('/register',usersController.create);
 routes.post('/auth',usersController.auth);
+routes.post('/forgot_password',usersController.forgot_password);
+routes.post('/reset_password',usersController.reset_password);
 
 
 export default routes;
