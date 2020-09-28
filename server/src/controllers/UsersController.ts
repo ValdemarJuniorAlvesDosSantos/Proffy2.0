@@ -5,7 +5,18 @@ import  jwt from "jsonwebtoken";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import sendEmailReset from "../utils/email"
+import convertHoursToMinutes from '../utils/convertHoursToMinutes'
 const { promisify } = require("util");
+
+interface ScheduleItem{
+    week_day: number,
+    from: string,
+    to: string
+}
+interface SubjectItem{
+    subject: "",
+    cost: number,
+}
 
 export default class UsersController{
     async create (request: Request,response: Response){
@@ -123,7 +134,7 @@ export default class UsersController{
             sendEmailReset(foundUser.id, foundUser.email, tokenReset)
             
                           
-            response.json({user_id:foundUser.id,tokenReset})
+            response.sendStatus(200).json({message:"ok"})
             
         }catch(err){
             response.send({error: "Error on recover password"});
@@ -156,6 +167,63 @@ export default class UsersController{
         }catch(err){
             return response.send(err)
         }
+    }
+    async update (request: Request,response: Response){
+        const {user_id, bio,avatar, whatsapp, subjects, schedule} = request.body
+        let up = {}
+        if (bio){
+            up = Object.assign(up,{bio})
+        }
+        if (whatsapp){
+            up = Object.assign(up,{whatsapp})
+        }
+        if (avatar){
+            up = Object.assign(up,{avatar})
+        }
+        const trx = await db.transaction();
+        try{
+            await trx('users')
+                    .where('users.id','=',user_id)
+                    .update(up);
+
+           
+            await trx('user_schedule')
+                    .where('user_schedule.user_id','=',user_id)
+                    .delete();
+            const userSchedule = schedule.map((scheduleItem:ScheduleItem)=>{
+                return {
+                    user_id,
+                    week_day: scheduleItem.week_day,
+                    from: convertHoursToMinutes(scheduleItem.from),
+                    to: convertHoursToMinutes(scheduleItem.to),
+        
+                };
+            })
+            await trx('user_schedule').insert(userSchedule);
+            await trx('classes')
+                    .where('classes.user_id','=',user_id)
+                    .delete();
+
+            const userClasses = subjects.map((subjectItem:SubjectItem)=>{
+                return {
+                    user_id,
+                    subject : subjectItem.subject,
+                    cost : subjectItem.cost
+        
+                };
+            })
+            await trx('classes').insert(userClasses);
+
+            
+
+
+            trx.commit();            
+            return response.send("ok")
+        }catch(err){
+            trx.rollback();
+            return response.send(err)
+        }
+       
     }
     
 
