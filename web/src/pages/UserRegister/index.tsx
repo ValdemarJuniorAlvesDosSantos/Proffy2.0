@@ -30,11 +30,11 @@ function UserRegister(){
 
         }).then((resposta)=>{
             const status = resposta.status
-            if (status === 201){
-                // alert("criado com sucesso")
+            if (status === 201){                
                 setSuccess(true)
             }else{
                 alert(resposta.data)
+                setSuccess(false)
             }
         }).catch((error)=>{
             alert(error)

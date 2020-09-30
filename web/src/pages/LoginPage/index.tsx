@@ -96,7 +96,7 @@ function LoginPage (){
 
                             <label htmlFor="checkBoxLembrar">Lembrar-me</label>   
                         </div>
-                        <Link className="esqueciSenha" to="/"> Esqueci minha senha </Link>
+                        <Link className="esqueciSenha" to="/forgot_password"> Esqueci minha senha </Link>
                     </div>
                     <button  type="submit" className=
                         {   isFiled
