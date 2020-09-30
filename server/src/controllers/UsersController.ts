@@ -3,7 +3,6 @@ import db from '../database/connection';
 import bcrypt, { hash } from "bcryptjs";
 import  jwt from "jsonwebtoken"; 
 import crypto from "crypto";
-import nodemailer from "nodemailer";
 import sendEmailReset from "../utils/email"
 import convertHoursToMinutes from '../utils/convertHoursToMinutes'
 const { promisify } = require("util");
@@ -101,7 +100,7 @@ export default class UsersController{
                         lastName:foundUser.lastName
                      }, token})
             }else{
-                return response.sendStatus(400).json({error:"falha ao autenticar"})
+                return response.json(null)
             }
         } catch (error) {
             response.json(null);

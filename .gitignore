@@ -5,6 +5,7 @@
 /server/.vscode
 /server/yarn**
 
+**database.sqlite
 
 /mobile/node_modules
 /mobile/.expo**

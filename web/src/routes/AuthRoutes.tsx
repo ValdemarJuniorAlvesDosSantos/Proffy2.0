@@ -4,6 +4,7 @@ import Landing from '../pages/Landing'
 import LoginPage from '../pages/LoginPage'
 import UserRegister from '../pages/UserRegister'
 import CompletedPage from '../components/CompletedPage'
+import ForgotPassword from '../pages/ForgotPassword'
 
 function AuthRoutes (){
         return(
@@ -13,7 +14,8 @@ function AuthRoutes (){
                 <Route path="/study" component={LoginPage} />
                 <Route path="/give-classes" component={LoginPage} />
                 <Route path="/login" component={LoginPage} />
-                <Route path="/register" component={UserRegister} />            
+                <Route path="/register" component={UserRegister} /> 
+                <Route path="/forgot_password" component={ForgotPassword} />          
             </BrowserRouter>
             
         )
