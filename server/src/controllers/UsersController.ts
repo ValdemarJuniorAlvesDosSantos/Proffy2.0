@@ -18,6 +18,37 @@ interface SubjectItem{
 }
 
 export default class UsersController{
+    async index (request: Request,response: Response){
+        const {user_id} = request.query;
+       
+        try{const foundUser = await db('users')
+                              .where('users.id','=',String(user_id)).first();
+        
+            const user={
+                email:foundUser.email,
+                name:foundUser.name,
+                last_name:foundUser.lastName,
+                avatar: foundUser.avatar,
+                bio:foundUser.bio,
+                whatsapp: foundUser.whatsapp,
+
+
+            }
+            const subjects= await db('classes')
+                            .where('classes.user_id','=',String(user_id))
+                            .select()
+            const schedule= await db('user_schedule')
+                            .where('user_schedule.user_id','=',String(user_id))
+                            .select()
+            response.json({user,subjects,schedule});
+
+
+
+        }catch(err){
+            response.send(400).json({err})
+        }                    
+
+    } 
     async create (request: Request,response: Response){
         const {
             name,
@@ -199,27 +230,27 @@ export default class UsersController{
                 };
             })
             await trx('user_schedule').insert(userSchedule);
-            await trx('classes')
-                    .where('classes.user_id','=',user_id)
-                    .delete();
-
-            const userClasses = subjects.map((subjectItem:SubjectItem)=>{
-                return {
-                    user_id,
-                    subject : subjectItem.subject,
-                    cost : subjectItem.cost
-        
-                };
-            })
-            await trx('classes').insert(userClasses);
-
+            await  trx('classes')
+                            .where('classes.user_id','=',user_id)
+                            .delete();
             
-
-
+            const classes = subjects.map((subjectItem:SubjectItem)=>{
+                    
+                return {
+                            user_id,
+                            subject : subjectItem.subject,
+                            cost : subjectItem.cost
+                
+                        };            
+                
+               
+            })
+            await trx('classes').insert(classes);
             trx.commit();            
             return response.send("ok")
         }catch(err){
             trx.rollback();
+            console.log("erro")
             return response.send(err)
         }
        
