@@ -51,8 +51,7 @@ export default class ClassesController{
         const {
             user_id,
             subject,
-            cost,
-            schedule
+            cost
         } = request.body;
         
         const trx = await db.transaction();
@@ -63,18 +62,7 @@ export default class ClassesController{
                 user_id
             });
         
-            const userSchedule = schedule.map((scheduleItem:ScheduleItem)=>{
-                return {
-                    user_id,
-                    week_day: scheduleItem.week_day,
-                    from: convertHoursToMinutes(scheduleItem.from),
-                    to: convertHoursToMinutes(scheduleItem.to),
-        
-                };
-            })
-        
-            await trx('user_schedule').insert(userSchedule);
-        
+                   
             await trx.commit();
             
             return response.status(201).send();

@@ -21,6 +21,7 @@ routes.post('/update',usersController.update);
 routes.post('/auth',usersController.auth);
 routes.post('/forgot_password',usersController.forgot_password);
 routes.post('/reset_password',usersController.reset_password);
+routes.get('/user_info',usersController.index);
 
 
 export default routes;
