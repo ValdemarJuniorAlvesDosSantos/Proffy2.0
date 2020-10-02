@@ -4,16 +4,15 @@ import logoImg from '../../assets/images/logo.svg';
 import landingImg from '../../assets/images/landing.svg';
 import studyIcon from '../../assets/images/icons/study.svg';
 import giveClassIcon from '../../assets/images/icons/give-classes.svg';
-import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
-import  PowerSettingsNew from '@material-ui/icons/PowerSettingsNew'
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
-
+import PageHeaderUser from '../../components/PageHeaderUser'
 import './styles.css';
+
 function Landing(){
     
     const [totalConnections, setTotalConnections ] = useState(0);   
-    const {logout} = useContext(AuthContext)
+    const {signed} = useContext(AuthContext)
     
 
     useEffect( ()=>{
@@ -27,27 +26,24 @@ function Landing(){
 
     },[])
 
-    function handleLogout(){
-        
-        logout()
-    }
 
     return (
 
         <div id="page-landing">
-
-            <button className="buttonLogout" type="button" onClick={handleLogout}>
-                
-                 <PowerSettingsNew fontSize="inherit"> </PowerSettingsNew>
-                 
-        </button>
-
+            <header>
+                {signed ?                    
+                        <PageHeaderUser/>
+                    : <></>
+                }
+            </header>           
+            
             <div id="page-landing-content" className="container">
-                
+           
 
                 <div className="logo-container">
                     <img src={logoImg} alt=""/>
                     <h2>Sua plataforma de estudos online.</h2>
+
                 </div>
 
                 <img 
@@ -55,21 +51,33 @@ function Landing(){
                     alt="Plataforma de estudos" 
                     className="hero-image"
                 />
-                <div className="buttons-container">
-                    <Link to="/study" className="study">
-                        <img src={studyIcon} alt="Estudar"/>
-                        Estudar
-                    </Link>
-                    <Link to="/give-classes" className="give-classes">
-                        <img src={giveClassIcon} alt="Dar Aulas"/>
-                        Dar Aulas
-                    </Link>
+                                
+            </div>
+            <div className="footer">
+                <div className="footer-container">
+                    <div className="text-footer">
+                        <h1>Seja bem-vindo.</h1>
+                        <p>O que deseja fazer?</p>                        
+                    </div>
+                    
 
-                </div>
-                <span className="total-connections">
-                    Total de { totalConnections } conexões
-                    <img src={purpleHeartIcon} alt="Coração Roxo"/>
-                </span>
+                    <span className="total-connections">
+                        <p>Total de { totalConnections } conexões <br/> já realizadas</p>
+                        {/* <img src={purpleHeartIcon} alt="Coração Roxo"/> */}
+                    </span>
+                    <div className="buttons-container">
+                        <Link to="/study" className="study">
+                            <img src={studyIcon} alt="Estudar"/>
+                            Estudar
+                        </Link>
+                        <Link to="/give-classes" className="give-classes">
+                            <img src={giveClassIcon} alt="Dar Aulas"/>
+                            Dar Aulas
+                        </Link>
+
+                    </div>
+                </div>                     
+                    
             </div>
         </div>
 

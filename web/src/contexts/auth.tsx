@@ -13,7 +13,10 @@ interface User {
     id:Number,
     name:string,
     lastName:string,
-    email:string
+    email:string,
+    avatar:string,
+    bio:string,
+    whatsapp:string
     
 }
 
@@ -41,7 +44,7 @@ export const AuthProvider: React.FC = ({children}) => {
                 console.log(response.data)
                 if (response.data !== null){
                     
-                 setUser(response.data.user);
+                    setUser(response.data.user);
 
                 }
                 

@@ -99,7 +99,9 @@ export default class UsersController{
                     id:foundUser.id,
                     email:foundUser.email,
                     name:foundUser.name,
-                    lastName:foundUser.lastName
+                    lastName:foundUser.lastName,
+                    avatar:foundUser.avatar,                    
+                    bio:foundUser.avatar,
                  }});
             }catch(error){
                 return response.json(null);
