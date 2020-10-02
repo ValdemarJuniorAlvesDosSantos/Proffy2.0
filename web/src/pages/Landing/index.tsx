@@ -4,7 +4,6 @@ import logoImg from '../../assets/images/logo.svg';
 import landingImg from '../../assets/images/landing.svg';
 import studyIcon from '../../assets/images/icons/study.svg';
 import giveClassIcon from '../../assets/images/icons/give-classes.svg';
-import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
 import PageHeaderUser from '../../components/PageHeaderUser'
@@ -13,7 +12,7 @@ import './styles.css';
 function Landing(){
     
     const [totalConnections, setTotalConnections ] = useState(0);   
-    const {logout,signed} = useContext(AuthContext)
+    const {signed} = useContext(AuthContext)
     
 
     useEffect( ()=>{
@@ -27,9 +26,6 @@ function Landing(){
 
     },[])
 
-    function handleLogout(){        
-        logout()
-    }
 
     return (
 
