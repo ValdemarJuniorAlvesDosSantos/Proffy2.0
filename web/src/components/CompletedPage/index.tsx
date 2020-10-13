@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import completedImg  from "../../assets/images/completed.svg"
-import './layout.css';
+import './styles.css';
 
 interface CompletedPageProps{    
     title:string,

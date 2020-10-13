@@ -5,6 +5,7 @@ import  jwt from "jsonwebtoken";
 import crypto from "crypto";
 import sendEmailReset from "../utils/email"
 import convertHoursToMinutes from '../utils/convertHoursToMinutes'
+import convertTime  from '../utils/convertTime'
 const { promisify } = require("util");
 
 interface ScheduleItem{
@@ -36,11 +37,17 @@ export default class UsersController{
             }
             const subjects= await db('classes')
                             .where('classes.user_id','=',String(user_id))
-                            .select()
+                            .select({
+                                subject:'classes.subject',
+                                cost:'classes.cost'
+                            })
             const schedule= await db('user_schedule')
                             .where('user_schedule.user_id','=',String(user_id))
                             .select()
-            response.json({user,subjects,schedule});
+            const scheduleItems = schedule.map((scheduleItem)=>{
+                return {week_day:scheduleItem.week_day, from:convertTime(scheduleItem.from),to:convertTime(scheduleItem.to)}
+            })
+            response.json({user,subjects,schedule:scheduleItems});
 
 
 
@@ -101,7 +108,7 @@ export default class UsersController{
                     name:foundUser.name,
                     lastName:foundUser.lastName,
                     avatar:foundUser.avatar,                    
-                    bio:foundUser.avatar,
+                    bio:foundUser.bio,
                  }});
             }catch(error){
                 return response.json(null);
@@ -130,8 +137,10 @@ export default class UsersController{
                         id:foundUser.id,
                         email:foundUser.email,
                         name:foundUser.name,
-                        lastName:foundUser.lastName
-                     }, token})
+                        lastName:foundUser.lastName,
+                        avatar:foundUser.avatar,                    
+                        bio:foundUser.bio,
+                    }, token})
             }else{
                 return response.json(null)
             }
@@ -201,8 +210,15 @@ export default class UsersController{
         }
     }
     async update (request: Request,response: Response){
-        const {user_id, bio,avatar, whatsapp, subjects, schedule} = request.body
+        const {user_id,name,lastName, bio,avatar, whatsapp, subjects, schedule} = request.body
+        console.log(request.body)
         let up = {}
+        if (name){
+            up = Object.assign(up,{name})
+        }
+        if (lastName){
+            up = Object.assign(up,{lastName})
+        }
         if (bio){
             up = Object.assign(up,{bio})
         }
@@ -218,25 +234,32 @@ export default class UsersController{
                     .where('users.id','=',user_id)
                     .update(up);
 
-           
-            await trx('user_schedule')
+            if (schedule){
+                await trx('user_schedule')
                     .where('user_schedule.user_id','=',user_id)
                     .delete();
-            const userSchedule = schedule.map((scheduleItem:ScheduleItem)=>{
-                return {
-                    user_id,
-                    week_day: scheduleItem.week_day,
-                    from: convertHoursToMinutes(scheduleItem.from),
-                    to: convertHoursToMinutes(scheduleItem.to),
-        
-                };
-            })
-            await trx('user_schedule').insert(userSchedule);
-            await  trx('classes')
+                if (schedule.length > 0){
+                    const userSchedule = schedule.map((scheduleItem:ScheduleItem)=>{
+                        return {
+                            user_id,
+                            week_day: scheduleItem.week_day,
+                            from: convertHoursToMinutes(scheduleItem.from),
+                            to: convertHoursToMinutes(scheduleItem.to),
+                
+                        };
+                    })
+                
+                    await trx('user_schedule').insert(userSchedule);
+                }
+                
+
+            }else{console.log("olha isso")}
+            if (subjects){
+                await  trx('classes')
                             .where('classes.user_id','=',user_id)
                             .delete();
             
-            const classes = subjects.map((subjectItem:SubjectItem)=>{
+                const classes = subjects.map((subjectItem:SubjectItem)=>{
                     
                 return {
                             user_id,
@@ -246,13 +269,17 @@ export default class UsersController{
                         };            
                 
                
-            })
-            await trx('classes').insert(classes);
+                })
+                if (subjects !== []){
+                    await trx('classes').insert(classes);
+                }
+            }
+            
             trx.commit();            
             return response.send("ok")
         }catch(err){
             trx.rollback();
-            console.log("erro")
+            console.log(err);
             return response.send(err)
         }
        
