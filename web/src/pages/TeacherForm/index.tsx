@@ -3,10 +3,10 @@ import {useHistory} from 'react-router-dom'
 import PageHeader from "../../components/PageHeader";
 import Input from "../../components/Input";
 import TextArea from "../../components/TextArea";
-import warningIcon from '../../assets/images/icons/warning.svg'
+import warningIcon from '../../assets/images/icons/warning.svg';
 import Select from "../../components/Select";
 
-import './styles.css'
+import './styles.css';
 import api from "../../services/api";
 function TeacherForm (){
     const history = useHistory();
@@ -55,6 +55,7 @@ function TeacherForm (){
         })
         setScheduleItems(updateScheduleItems);
     }
+    
     return (
         <div id="page-teacher-form" className="container">
             <PageHeader title="Que incrível que você quer dar aulas"
@@ -92,7 +93,10 @@ function TeacherForm (){
                     </fieldset>
 
                     <fieldset>
-                        <legend>Sobre a Aula</legend>
+                        <legend>
+                            Sobre a Aula
+                            
+                        </legend>
                         <Select name="subject"
                             label="Matéria"
                             value={subject}
@@ -101,21 +105,21 @@ function TeacherForm (){
                                 {value:'Artes', label:'Artes'},
                                 {value:'Biologia', label:'Biologia'},
                                 {value:'Ciências', label:'Ciências'},
-                                {value:'Educação Fisica', label:'Educação Fisica'},
-                                {value:'Fisica', label:'Fisica'},
+                                {value:'Educação Física', label:'Educação Física'},
+                                {value:'Física', label:'Física'},
                                 {value:'Geografia', label:'Geografia'},
                                 {value:'História', label:'História'},
                                 {value:'Matemática', label:'Matemática'},
                                 {value:'Português', label:'Português'},
-                                {value:'Quimica', label:'Quimica'}
+                                {value:'Química', label:'Química'}
 
                             ]}
                         />
                         <Input 
-                        name="cost"
-                        label="Custo da sua hora por aula"
-                        value={cost}
-                        onChange={(e) =>{setCost(e.target.value)}}
+                            name="cost"
+                            label="Custo da sua hora por aula"
+                            value={cost}
+                            onChange={(e) =>{setCost(e.target.value)}}
                         />                    
                         
                     </fieldset>
@@ -126,7 +130,7 @@ function TeacherForm (){
                         </legend>
                         {scheduleItems.map( (scheduleItem, index) => {
                                 return(
-                                <div key={scheduleItem.week_day} className="schedule-item">
+                                <div key={index} className="schedule-item">
                                     <Select name="week_day"
                                         label="Dia da Semana"
                                         onChange ={e=>setScheduleItemValue(index,'week_day',e.target.value)}
@@ -163,10 +167,15 @@ function TeacherForm (){
                             
                     <footer>
                         <p>
-                            <img src={warningIcon} alt="Aviso Inportante"/>
+                           
+                            <img src={warningIcon} alt="Aviso Importante"/>
+                        
                             Importante! <br/>
-                            Preencha todos os dados.
+                            <p>Preencha todos os dados.</p> 
+                            
+
                         </p>
+                        
                         <button type="submit">
                             Salvar Cadastro.
                         </button>
