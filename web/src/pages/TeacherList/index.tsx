@@ -43,13 +43,13 @@ import api from "../../services/api";
                              {value:'Artes', label:'Artes'},
                              {value:'Biologia', label:'Biologia'},
                              {value:'Ciências', label:'Ciências'},
-                             {value:'Educação Fisica', label:'Educação Fisica'},
-                             {value:'Fisica', label:'Fisica'},
+                             {value:'Educação Física', label:'Educação Física'},
+                             {value:'Física', label:'Física'},
                              {value:'Geografia', label:'Geografia'},
                              {value:'História', label:'História'},
                              {value:'Matemática', label:'Matemática'},
                              {value:'Português', label:'Português'},
-                             {value:'Quimica', label:'Quimica'}
+                             {value:'Química', label:'Química'}
 
                          ]}
                     />
@@ -64,7 +64,7 @@ import api from "../../services/api";
                              {value:'3', label:'Quarta-feira'},
                              {value:'4', label:'Quinta-feira'},
                              {value:'5', label:'Sexta-feira'},
-                             {value:'6', label:'Sabado'}
+                             {value:'6', label:'Sábado'}
 
                          ]}
                     />

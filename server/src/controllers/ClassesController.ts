@@ -37,6 +37,8 @@ export default class ClassesController{
             .where('classes.subject','=', subject)
             .join('users', 'classes.user_id' , '=', 'users.id')
             .select(['classes.*' , 'users.*'])
+
+                
         if (page){
             const inicio = 10*(page-1);
             const fim = inicio + 9;
