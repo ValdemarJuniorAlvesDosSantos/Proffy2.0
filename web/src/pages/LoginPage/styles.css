@@ -175,7 +175,7 @@ main{
 .insideButtonFiled:hover{
     background: var(--color-secondary-dark);
 } 
-footer{
+.mainContent footer{
     margin-top: 15rem;
     margin-bottom: 5rem;
     width: 100%;
@@ -183,19 +183,19 @@ footer{
     align-items: center;
     justify-content: space-between;
 }
-footer .left a{
+.mainContent footer .left a{
     font-style: normal;
     font-weight: 600;
     color:var(--color-primary-dark);
     line-height: 2.6rem;
     
 }
-footer .left p{
+.mainContent footer .left p{
     font-size: 1.6rem;
     line-height: 2.6rem;
     color: var(--color-text-base);
 }
-footer .right{
+.mainContent footer .right{
     display:  flex;
     align-items: center;
     font-size: 1.2rem;
@@ -204,6 +204,6 @@ footer .right{
     
     
 }
-footer .right img{
+.mainContent footer .right img{
     margin-left: 0.4rem;
 }

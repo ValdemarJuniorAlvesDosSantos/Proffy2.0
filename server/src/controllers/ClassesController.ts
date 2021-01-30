@@ -62,8 +62,7 @@ export default class ClassesController{
                 subject,
                 cost,
                 user_id
-            });
-        
+            });       
                    
             await trx.commit();
             
