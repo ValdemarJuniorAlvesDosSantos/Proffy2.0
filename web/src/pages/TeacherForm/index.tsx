@@ -167,9 +167,8 @@ function TeacherForm (){
                             
                     <footer>
                         <p>
-                           
                             <img src={warningIcon} alt="Aviso Importante"/>
-                        
+
                             Importante! <br/>
                             <p>Preencha todos os dados.</p> 
                             

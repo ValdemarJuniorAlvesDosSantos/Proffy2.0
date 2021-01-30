@@ -24,7 +24,7 @@ export default function App() {
         <AuthProvider>
           < AppStack />
         </AuthProvider>
-        <StatusBar style="light"/>
+        <StatusBar style="dark"/>
       </>
     );
   }
